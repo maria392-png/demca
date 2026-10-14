@@ -1,0 +1,76 @@
+create table roles(
+id serial primary key,
+name varchar
+);
+
+create table users(
+id serial primary key,
+surname varchar,
+name varchar,
+lastname varchar,
+login varchar,
+id_role int references roles(id)
+);
+
+create table categories(
+id serial primary key,
+name varchar
+);
+
+create table subcategories(
+id serial primary key,
+name varchar
+);
+
+create table manufactures(
+id serial primary key,
+name varchar
+);
+
+create table products(
+id serial primary key,
+name varchar,
+id_category int references categories(id),
+id_subcategory int references subcategories(id),
+pin varchar,
+id_manufacture int references manufactures(id),
+opisanie varchar,
+sostav varchar,
+price float
+);
+
+create table sizes(
+id serial primary key,
+name varchar
+);
+
+create table stocks(
+id serial primary key,
+id_product int references products(id),
+id_size int references sizes(id),
+count int
+);
+
+create table orders(
+id serial primary key,
+id_user int references users(id),
+date date
+);
+
+create table orders_items(
+id serial primary key,
+id_order int references orders(id),
+id_stock int references stocks(id),
+count int
+);
+
+=ИНДЕКС(Роли!A$2:A$4;ПОИСКПОЗ(E2; Роли!B$2:B$4;0;))
+SELECT * FROM stocks
+=ИНДЕКС($F$1:$F$31;ПОИСКПОЗ(1;ИНДЕКС(($G$1:$G$31=B2)*($H$1:$H$31=C2);0);0))
+
+
+pip install psycopg2-binary
+pip install pyside6
+pip install sqlalchemy
+pyside6-designer
+pyside6-uic ui/auth_win.ui -o ui/auth_win.py
